@@ -4,7 +4,8 @@ import com.example.hello.domain.Member;
 
 import java.util.*;
 
-public class MemoryMemberRepository implements MemberRepository {
+public class MemoryMemberRepository implements MemberRepository{
+
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
 
@@ -21,17 +22,23 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> findAll() {
-        return new ArrayList<>(store.values());
-    }
-
-    @Override
     public Optional<Member> findByName(String name) {
         return store.values().stream()
                 .filter(member -> member.getName().equals(name))
                 .findAny();
     }
 
+    @Override
+    public Optional<Member> findByPassword(String password) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return new ArrayList<>(store.values());
+    }
+
+    @Override
     public void clearStore() {
         store.clear();
     }

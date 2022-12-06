@@ -1,19 +1,43 @@
-//package com.example.hello.config;
+package com.example.hello.config;
+
+import com.example.hello.repository.*;
+import com.example.hello.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+
+@Configuration
+public class SpringConfig {
+//    private final DataSource dataSource;
+//    private final EntityManager em;
 //
-//import com.example.hello.repository.MemberRepository;
-//import com.example.hello.repository.MemoryMemberRepository;
-//import com.example.hello.service.MemberService;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//@Configuration
-//public class SpringConfig {
+//    public SpringConfig(DataSource dataSource, EntityManager em) {
+//        this.dataSource = dataSource;
+//        this.em = em;
+//    }
 //    @Bean
 //    public MemberService memberService() {
 //        return new MemberService(memberRepository());
 //    }
 //    @Bean
 //    public MemberRepository memberRepository() {
-//        return new MemoryMemberRepository();
+////        return new MemoryMemberRepository();
+////        return new JdbcMemberRepository(dataSource);
+////        return new JdbcTemplateMemberRepository(dataSource);
+//        return new JpaMemberRepository(em);
 //    }
-//}
+
+    private final MemberRepository memberRepository;
+
+    public SpringConfig( MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+    @Bean
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
+    }
+}
